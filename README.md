@@ -7,7 +7,7 @@
         Named entity recognition (NER)<br />        
     </p>
     <div>
-        <span>The module is designed to determine the type of proper names, event names, products, place names and so forth.</span>
+        <span>This system is designed to determine the type of proper names, event names, products, place names and so forth.</span>
         <br />
         <span>The classification into three types:</span>
         <br />
@@ -19,7 +19,7 @@
         <br />
         <span>Named types are not defined by the dictionary, and based on statistical algorithms.</span>
         <br />
-        <span>Number and description of types of classes given at the stage of training (getting stat. models).</span>
+        <span>Number and description of types of classes given at the stage of training (getting statistical model).</span>
         <br />
         <span>The accuracy of the types of entities (as F1):</span>
         <ul style="margin-left: 30px">
@@ -28,7 +28,7 @@
             <li>3. geographical names - 95% </li>
         </ul>
         <br />
-        <span>This module works with the english text and classifies words containing uppercase letter.</span>
+        <span>This system works with the english text and classifies words containing uppercase letter.</span>
     </div>
 </div>
 <hr />
@@ -37,7 +37,7 @@
         Автоматическое определение именованных сущностей (NER - Named-Entity Recognition)<br />        
     </p>
     <div>
-        <span>Модуль предназначен для определения типа имен собственных, названий событий, продуктов, топонимов и пр.</span>
+        <span>Данная система предназначен для определения типа имен собственных, названий событий, продуктов, топонимов и пр.</span>
         <br />
         <span>Классификация производится на три типа:</span>
         <br />
@@ -47,9 +47,9 @@
             <li>3. географические названия (города, штаты и т.п., например, <span class="B_GEO" title="Географические объекты">Vermont</span>, <span class="B_GEO" title="Географические объекты">Washington</span>)</li>
         </ul>
         <br />
-        <span>Именованные  типы определяются не словарем, а на основе статистических алгоритмов.</span>
+        <span>Именованные типы определяются не словарем, а на основе статистических алгоритмов.</span>
         <br />
-        <span>Количество типов и описание их классов задается на этапе обучения (получения стат.модели).</span>
+        <span>Количество типов и описание их классов задается на этапе обучения (получения статистической модели).</span>
         <br />
         <span>Точность определения типов сущностей (по мере F1):</span>
         <ul style="margin-left: 30px">
@@ -58,6 +58,6 @@
             <li>3. географические названия - 95% </li>
         </ul>
         <br />
-        <span>Данный модуль работает с англоязычными текстами и классифицирует слова, содержащие заглавную букву.</span>
+        <span>Данная система работает с англоязычными текстами и классифицирует слова, содержащие заглавную букву.</span>
     </div>
 </div>
