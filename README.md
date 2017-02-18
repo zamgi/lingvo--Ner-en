@@ -4,8 +4,7 @@
 
 <div style="padding: 20px">
     <p>
-        The module automatically detect named entities<br />
-        (NER - Named entity recognition)
+        Named entity recognition (NER)<br />        
     </p>
     <div>
         <span>The module is designed to determine the type of proper names, event names, products, place names and so forth.</span>
@@ -35,8 +34,7 @@
 <hr />
 <div style="padding: 20px; padding-top: 5px;">
     <p>
-        Модуль автоматического определения именованных сущностей<br />
-        (NER - Named-Entity Recognition)
+        Автоматическое определение именованных сущностей (NER - Named-Entity Recognition)<br />        
     </p>
     <div>
         <span>Модуль предназначен для определения типа имен собственных, названий событий, продуктов, топонимов и пр.</span>
