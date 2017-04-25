@@ -2,6 +2,7 @@ del "*.suo" /S/Q/F/A
 del "*.csproj.user" /S/Q/F/A
 del "ner_en.web.demo\bin\*.pdb" /Q
 rd "ner_en.web.demo\obj" /S/Q
+rd "ner_en.web.demo\(logs)" /S/Q
 rd "captcha\bin" /S/Q
 rd "captcha\obj" /S/Q
 rd "crfsuite.net\bin" /S/Q
