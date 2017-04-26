@@ -5,7 +5,9 @@
 /bin/lingvo.core.dll
 /bin/Newtonsoft.Json.dll
 /bin/ner_eu.web.demo.dll
+/bin/ner_eu.web.demo.dll.config
 /bin/ner-crf.net.dll
+/bin/log4net.dll
 /obj/*
 /(logs)/*
 *.csproj.user
