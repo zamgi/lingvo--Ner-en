@@ -121,7 +121,7 @@ namespace lingvo.sentsplitting
         /// <summary>
         /// 
         /// </summary>
-        private class dot_vicinity_t
+        private sealed class dot_vicinity_t
         {
             /*public dot_vicinity_t( int DEFAULT_WORDS_CAPACITY )
             {
