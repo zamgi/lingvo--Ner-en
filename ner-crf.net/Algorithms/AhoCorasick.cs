@@ -68,7 +68,7 @@ namespace lingvo.ner
             /// <summary>
             /// 
             /// </summary>
-            private class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t >
+            private sealed class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t >
             {
                 public static readonly ngram_t_IEqualityComparer Instance = new ngram_t_IEqualityComparer();
                 private ngram_t_IEqualityComparer() { }
@@ -204,7 +204,7 @@ namespace lingvo.ner
         /// <summary>
         /// 
         /// </summary>
-        private class SearchResultIComparer : IComparer< SearchResult >
+        private sealed class SearchResultIComparer : IComparer< SearchResult >
         {
             public static readonly SearchResultIComparer Instance = new SearchResultIComparer();
             private SearchResultIComparer() { }
@@ -223,6 +223,45 @@ namespace lingvo.ner
                 return (y.NerOutputType - x.NerOutputType);
             }
             #endregion
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private struct Finder
+        {
+            private TreeNode _Root;
+            private TreeNode _Node;
+            public static Finder Create( TreeNode root ) => new Finder() { _Root = root, _Node = root };
+
+            public bool Find( word_t word, out TreeNode node )
+            {
+                TreeNode transNode;
+                do
+                {
+                    if ( word.IsWordInNerChain ) //---if ( word.Tag == DONT_MERGE_WITH_NAME_ANOTHER )
+                    {
+                        node = null;
+                        return (false); //goto SKIP_WORD;
+                    }
+                    transNode = _Node.GetTransition( word.nerOutputType );
+                    if ( _Node == _Root )
+                    {
+                        break;
+                    }
+                    if ( transNode == null )
+                    {
+                        _Node = _Node.Failure;
+                    }
+                }
+                while ( transNode == null );
+                if ( transNode != null )
+                {
+                    _Node = transNode;
+                }
+                node = _Node;
+                return (true);
+            }
         }
 
         #region [.private field's.]
@@ -381,7 +420,7 @@ namespace lingvo.ner
                     TreeNode r = node.Parent.Failure;
                     var nerOutputType = node.NerOutputType;
 
-                    while ( r != null && !r.ContainsTransition( nerOutputType ) )
+                    while ( (r != null) && !r.ContainsTransition( nerOutputType ) )
                     {
                         r = r.Failure;
                     }
@@ -414,46 +453,8 @@ namespace lingvo.ner
         public int Count { get; private set; }
 
         public SearchResult? FindFirst( List< word_t > words )
-        {            
-            var ss = default(SortedSet< SearchResult >);
-            var node = _Root;
-
-            for ( int index = 0, len = words.Count; index < len; index++ )
-            {
-                TreeNode transNode;
-                do
-                {
-                    var word = words[ index ];
-                    if ( word.IsWordInNerChain ) //---if ( word.Tag == DONT_MERGE_WITH_NAME_ANOTHER )
-                        goto SKIP_WORD;
-                    transNode = node.GetTransition( word.nerOutputType );
-                    if ( node == _Root )
-                    {
-                        break;
-                    }
-                    if ( transNode == null )
-                    {
-                        node = node.Failure;
-                    }
-                }
-                while ( transNode == null );
-                if ( transNode != null )
-                {
-                    node = transNode;
-                }
-
-                if ( node.HasNgrams )
-                {
-                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
-
-                    foreach ( var ngram in node.Ngrams )
-                    {
-                        ss.Add( new SearchResult( index - ngram.NerOutputTypes.Length + 1, ngram.NerOutputTypes.Length, ngram.ResultNerOutputType ) );
-                    }
-                }
-            SKIP_WORD:
-                ;
-            }
+        {
+            var ss = FindAllInternal( words );
             if ( ss != null )
             {
                 return (ss.Min);
@@ -461,35 +462,17 @@ namespace lingvo.ner
             return (null);
         }
         public ICollection< SearchResult > FindAll( List< word_t > words )
+        {
+            return (FindAllInternal( words ));
+        }
+        private SortedSet< SearchResult > FindAllInternal( List< word_t > words )
         {            
             var ss = default(SortedSet< SearchResult >);
-            var node = _Root;
+            var finder = Finder.Create( _Root );
 
             for ( int index = 0, len = words.Count; index < len; index++ )
             {
-                TreeNode transNode;
-                do
-                {
-                    var word = words[ index ];
-                    if ( word.IsWordInNerChain ) //---if ( word.Tag == DONT_MERGE_WITH_NAME_ANOTHER )
-                        goto SKIP_WORD;
-                    transNode = node.GetTransition( word.nerOutputType );
-                    if ( node == _Root )
-                    {
-                        break;
-                    }
-                    if ( transNode == null )
-                    {
-                        node = node.Failure;
-                    }
-                }
-                while ( transNode == null );
-                if ( transNode != null )
-                {
-                    node = transNode;
-                }
-
-                if ( node.HasNgrams )
+                if ( finder.Find( words[ index ], out var node ) && node.HasNgrams )
                 {
                     if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
 
@@ -498,8 +481,6 @@ namespace lingvo.ner
                         ss.Add( new SearchResult( index - ngram.NerOutputTypes.Length + 1, ngram.NerOutputTypes.Length, ngram.ResultNerOutputType ) );
                     }
                 }
-            SKIP_WORD:
-                ;
             }
             return (ss);
         }

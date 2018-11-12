@@ -41,12 +41,12 @@ namespace lingvo.sentsplitting
 
         public override string ToString()
         {
-            var _v = v.ToString();
-            if ( string.IsNullOrEmpty( _v ) )
+            var s = v.ToString();
+            if ( string.IsNullOrEmpty( s ) )
             {
                 return ("[" + StartIndex + ":" + Length + "]");
             }
-            return ("[" + StartIndex + ":" + Length + "], value: '" + _v + "'");
+            return ("[" + StartIndex + ":" + Length + "], value: '" + s + "'");
         }
     }
 
@@ -68,18 +68,17 @@ namespace lingvo.sentsplitting
 
         public override string ToString()
         {
-            var _v = v.ToString();
-            if ( string.IsNullOrEmpty( _v ) )
+            var s = v.ToString();
+            if ( string.IsNullOrEmpty( s ) )
             {
                 return ("[0:" + Length + "]");
             }
-            return ("[0:" + Length + "], value: '" + _v + "'");
+            return ("[0:" + Length + "], value: '" + s + "'");
         }
     }
 
     /// <summary>
-    /// Class for searching string for one or multiple 
-    /// keywords using efficient Aho-Corasick search algorithm
+    /// Class for searching string for one or multiple keywords using efficient Aho-Corasick search algorithm
     /// </summary>
     internal sealed class AhoCorasick< TValue >
     {
@@ -91,7 +90,7 @@ namespace lingvo.sentsplitting
             /// <summary>
             /// 
             /// </summary>
-            private class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t< TValue > >
+            private sealed class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t< TValue > >
             {
                 public static readonly ngram_t_IEqualityComparer Instance = new ngram_t_IEqualityComparer();
                 private ngram_t_IEqualityComparer() { }
@@ -238,6 +237,7 @@ namespace lingvo.sentsplitting
                     return (d);
 
                 return (x.StartIndex - y.StartIndex);
+
                 //d = x.StartIndex - y.StartIndex;
                 //if ( d != 0 )
                     //return (d);
@@ -445,9 +445,9 @@ namespace lingvo.sentsplitting
         internal ICollection< SearchResultOfHead2Left< TValue > > FindOfHead2Left( ss_word_t headWord )
         {
             var ss = default(SortedSet< SearchResultOfHead2Left< TValue > >);
-            var finder = Finder.Create( _Root );
-            
-            int      index = 0;
+            var finder = Finder.Create( _Root );            
+            int index = 0;
+
             for ( var word = headWord; word != null; word = word.next )
             {
                 var node = finder.Find( word.valueOriginal );
