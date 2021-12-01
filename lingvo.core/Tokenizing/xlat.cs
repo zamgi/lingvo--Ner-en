@@ -416,13 +416,11 @@ namespace lingvo.core
             }
             var ctmGCHandle = GCHandle.Alloc( _x_ /*xlat.CHARTYPE_MAP*/, GCHandleType.Pinned );
             _CHARTYPE_MAP   = (CharType*) ctmGCHandle.AddrOfPinnedObject().ToPointer();
-            //_CHARTYPE_MAP = (CharType*) Marshal.UnsafeAddrOfPinnedArrayElement( xlat.CHARTYPE_MAP, 0 ).ToPointer();
 #endif			
 #if XLAT_UPPER_INVARIANT_MAP			
             //-5-
             var uimGCHandle      = GCHandle.Alloc( xlat.UPPER_INVARIANT_MAP, GCHandleType.Pinned );
             _UPPER_INVARIANT_MAP = (char*) uimGCHandle.AddrOfPinnedObject().ToPointer();
-            //---_UPPER_INVARIANT_MAP = (char*) Marshal.UnsafeAddrOfPinnedArrayElement( UPPER_INVARIANT_MAP, 0 ).ToPointer();
 #endif	
         }
 
