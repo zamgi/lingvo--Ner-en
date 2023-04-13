@@ -17,12 +17,8 @@ $(document).ready(function () {
 'After graduating from UW in 1972[42] Bundy joined Governor Daniel J. Evans\'s reelection campaign.[43] Posing as a college student, he shadowed Evans\'s opponent, former governor Albert Rosellini, recording his stump speeches for analysis by Evans\'s team.[44][45] After Evans\'s reelection he was hired as an assistant to Ross Davis, Chairman of the Washington State Republican Party.';
 
     var textOnChange = function () {
-        var _len = $("#text").val().length; 
-        var len = _len.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        var $textLength = $("#textLength");
-        $textLength.html("length of text: " + len + " characters");
-        if (MAX_INPUTTEXT_LENGTH < _len) $textLength.addClass("max-inputtext-length");
-        else                             $textLength.removeClass("max-inputtext-length");
+        let len = $('#text').val().length, len_txt = len.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        $('#textLength').toggleClass('max-inputtext-length', MAX_INPUTTEXT_LENGTH < len).html('length of text: ' + len_txt + ' characters');
     };
     var getText = function( $text ) {
         var text = trim_text( $text.val().toString() );

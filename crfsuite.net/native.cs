@@ -52,7 +52,7 @@ namespace lingvo.crfsuite
             var p = (int)Environment.OSVersion.Platform;
             return (p == 4) || (p == 6) || (p == 128);
         }
-        private static bool Isx64() => ( IntPtr.Size == 8);
+        private static bool Isx64() => (IntPtr.Size == 8);
 
         private const string DLL_WIN_x64 = "crfsuite_x64.dll";
         private const string DLL_WIN_x86 = "crfsuite_x86.dll";
